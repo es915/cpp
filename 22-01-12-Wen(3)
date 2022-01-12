@@ -1,0 +1,67 @@
+#include <iostream>
+
+using namespace std;
+
+class Person {
+public:
+	int age;
+	string name;
+
+	void introduce() {
+		cout << name << ", " << age << endl;
+	}
+};
+
+//typedef struct _person {
+//
+//	int age;
+//	string name;
+//	void (*introduce)(struct _Person * p); // 함수 포인트 저장
+//
+//} Person;
+
+// typedef struct _car {
+
+// 	int velo;
+//	string model;
+
+//} Car;
+
+
+void introduce(Person * p) {
+	cout << p->name << ", " << p->age << endl;
+}
+
+// 구조체 초기화 함수
+//Person *personInit(int age, string name) {
+//	// 초기화 하면서 함수 연결
+//	Person* p = (Person*)malloc(sizeof(Person));
+//	p->age = age;
+//	p->name = name;
+//	p->introduce = introduce;
+// }
+
+void test() {
+	cout << "테스트" << endl;
+}
+
+int main() {
+
+	Person* p1 = new Person(); // 클래스 초기화 함수 (생성자)
+	Person* p2 = new Person(); // 클래스 초기화 함수 (생성자)
+
+	cout << p1->age << endl;
+	cout << p1->name << endl;
+	p1->introduce();
+
+	// Person * p1 = personInit(10, "홍길동");
+	// Person * p2 = personInit(20, "임꺾정");
+
+
+	// 함수 포인터
+	void (*ptest)() = test;
+
+	// 함수는 괄호 () 붙이면 호출한다는 뜻
+	ptest();
+
+}
