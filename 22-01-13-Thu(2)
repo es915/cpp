@@ -1,0 +1,45 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+// cpp 의 데이터와 함수 엮기
+class Person { // 객체
+// 접근 제어자 종류
+// 1. public - 누구나 접근 가능
+// 2. private : 해당 자원은 해당 클래스만 가능 ( 기본값 )
+// 3. protected : 상속관계에 해당하는 클래스만 사용 가능
+public : // 접근 제어자 - 적지 않으면 기본값으로 설정됨
+	int age;
+
+	Person(int age, const char* name) { // 구조체가 만들어질때마다 생성자가 실행됨
+		cout << "사람이 태어남" << endl;
+		this->age = age;
+		strcpy(this->name, name);
+	}
+// private :
+	char name[20];
+
+	void introduce() {
+		cout << name << ", " << age << endl;
+	}
+};
+
+int main() {
+
+	Person p1 = Person(10, "홍길동"); // 복사 초기화
+
+	// age는 public 아래 있어서 가져올수 있음
+	cout << p1.age << endl;
+
+	// name이 private 아래 있어서 가져오질 못함 - 현재는 주석처리
+	cout << p1.name << endl;
+
+	// 객체는 직접 초기화를 함
+	// Person p1(10, "홍길동");
+
+	// 직접 초기화는 함수와 헷갈릴수도 있음 -> 균일 초기화 사용
+	// Person p1{ 10, "홍길동" };
+
+}
