@@ -1,0 +1,80 @@
+#include <iostream>
+
+using namespace std;
+
+class Person {
+private:
+	int age;	
+	string name;
+
+public:
+	Person() : Person(0, "")
+	{
+		/*cout << "사람 탄생" << endl;*/
+		// 코드 중복 -> 생성자를 생성자안에 세팅할수 있음
+		// 생성자가 오버로딩 됬을때 생성자끼리 위임할수 있음
+	}
+
+	Person(int age, string name) :
+		age(age),
+		name(name)
+	{
+		cout << "사람 탄생" << endl;
+	} 
+
+	// 소멸자 - 객체가 사라질때, 마무리하는 작업
+	~Person() {
+		cout << "사람이 사라집니다" << endl;
+	}
+
+	void introduce() {
+		cout << name << ", " << age << endl;
+	}
+};
+
+int main() {
+	
+	// 정적 할당
+	/*Person p1;
+	Person p2{ 20, "홍길동" };*/
+
+	// 동적 할당
+
+	// 일반 값 동적할당
+	// c
+	int* pnum = (int*)malloc(sizeof(int));
+	free(pnum);
+
+	// cpp
+	int* pnum2 = new int;
+	delete pnum2;
+	
+	// 배열 동적할당
+	// c언어 - malloc, realloc, free
+	int* arr = (int*)malloc(sizeof(int) * 5);
+	free(arr);
+
+	// cpp - new, delete
+	int* arr2 = new int[5];
+	delete[] arr2; // 배열이라고 표시하기 위해 [] 를 붙임
+
+	// 구조체 또는 객체 동적할당
+	// c
+	// Person* p1 = (Person*)malloc(sizeof(Person));
+
+	//	p1->introduce(); // 주소 타입이므로 -> 로 가르킴
+
+	// cpp
+	Person* p2 = new Person(20, "홍길동");
+
+	p2->introduce();
+
+	// new - 생성자 호출
+	// malloc - 생성자 호출 X
+
+	delete p2; // 반드기 소멸자 호출
+	// free - 소멸자 호출 X - c언어에선 소멸자 개념 X
+
+
+	return 0;
+}
