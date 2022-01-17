@@ -1,10 +1,16 @@
 #include <iostream>
-#include "Person.cpp"
-#include "DataStore.cpp"
+#include "Main.h"
+#include "Person.h"
+#include "DataStore.h"
 
 using namespace std;
 
 int main() {
+
+	Person p1{ 20, "ȫ�浿" };
+	p1.introduce();
+
+	test();
 	
 	DataStore ds;
 	
@@ -27,4 +33,8 @@ int main() {
 	delete ds2;
 	
 	return 0;
+}
+
+void test() {
+	cout << "test" << endl;
 }
