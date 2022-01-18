@@ -21,4 +21,3 @@ using namespace std;
 	int DataStore::getData(int index) {
 		return datas[index];
 	}
-};
