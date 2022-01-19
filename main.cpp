@@ -2,59 +2,84 @@
 
 using namespace std;
 
-class Person {
-public : 
-    Person() : Person(0, "무명") { };
-        
-    Person(int age, const char* name) :mAge(age) {
-
-        mName = new char[20];
-        strcpy(mName, name);
-
-        cout << "사람 초기화" << endl;
-        cout << "나이 : " << mAge << endl;
-        cout << "이름 : " << mName << endl;
-    }
-
-    ~Person() {
-        delete mName;
-        cout << "메모리 해제" << endl;
-    };
-
-    Person(const Person& p) {
-        mAge = p.mAge;
-        mName = new char[20];
-        strcpy(mName, p.mName);
-    }
-
-    void operator=(const Person & p) {
-        mAge = p.mAge;
-        mName = new char[20];
-        strcpy(mName, p.mName);
-    }
-
-    char* GetName() const {
-        return mName;
-    }
+class MyNumbers {
 private :
-    int mAge;
-    char* mName;
+    int x;
+    int y;
+public :
+    MyNumbers() {
+
+    }
+    MyNumbers(int num1, int num2) :
+        x(num1),
+        y(num2)
+    {
+    }
+
+    void PrintNumbers() {
+        cout << x << ", " << y << endl;
+    }
+    
+    // 값을 참조해야되기 때문에 상수화함
+    // 연산자오버로딩은 왼쪽을 기준으로 진행함
+    // a + b : a가 기준 this->x는 a의 x를 가르키게 됨 n은 b를 가르킴
+    MyNumbers operator+(const MyNumbers& n) const {
+        MyNumbers rst;
+        rst.x = this->x + n.x;
+        rst.y = this->y + n.y;
+        return rst;
+    }
+    MyNumbers operator-(const MyNumbers& n) const{
+        MyNumbers rst;
+        rst.x = this->x - n.x;
+        rst.y = this->y - n.y;
+        return rst;
+    }
+    MyNumbers operator*(const MyNumbers& n) const{
+        MyNumbers rst;
+        rst.x = this->x * n.x;
+        rst.y = this->y * n.y;
+        return rst;
+    }
+    MyNumbers operator/(const MyNumbers& n) const{
+        MyNumbers rst;
+        rst.x = this->x / n.x; 
+        rst.y = this->y / n.y;
+        return rst;
+    }
+    void operator=(const MyNumbers& n) {
+        this->x = n.x; 
+        this->y = n.y;
+    }
+
 };
 
+using namespace std;
 
 int main() {
-    Person p1(20, "홍길동");
-    Person p2(22, "이순신");
-    Person p3(24, "이성계");
 
-    // 클래스 객체 -> 객체 연산
-    // 대입 복사
+    MyNumbers m1(1, 2);
+    MyNumbers m2(10, 20);
 
-    // 대입 연산자를 클래스 안에 함수로 명시하여
-    // 얕은 복사하던 '=' 연산자를 깊은 복사를 하게 정의함
-    p2 = p3;
-    cout << p2.GetName() << endl;
-    // 객체간의 연산을 함수로 따로 정의함 -> 연산자 오버로딩
-    // operator=() : '=' 연산자를 함수화 
+    m1.PrintNumbers(); // 출력 : 1, 2
+    m2.PrintNumbers(); // 출력 : 10, 20
 
+    MyNumbers m3;
+
+    // m1을 기준으로 + 를 만났을때 그 뒤의 값인 m2와 연산자 오버로딩을 실행
+    // m1의 x값과 y값을 각각 더한 값을 리턴하고 m3에 저장 
+    m3 = m1 + m2;
+    m3.PrintNumbers(); // 출력 : 1, 21
+
+    m3 = m2 - m1;
+    m3.PrintNumbers(); // 출력 : 9, 19
+
+    m3 = m1 * m2;
+    m3.PrintNumbers(); // 출력 : 10, 40
+
+    m3 = m2 / m1;
+    m3.PrintNumbers(); // 출력 : 10, 10
+
+    m1 = m2;
+    m1.PrintNumbers(); // 출력 : 10, 20
 } 
